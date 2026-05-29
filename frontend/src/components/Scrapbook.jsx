@@ -39,7 +39,7 @@ function Scrapbook({ giftData, onLock, isAudioPlaying, toggleAudio }) {
     "Forever walking by your side 🌸",
     "Beautiful sunsets by the beach 🌊🌅",
     "Looking up at the trees, hand-in-hand 🌳✌️",
-    "Selfies under the night lights 🌃",
+    "Close enough to hear your heart beat. ✨",
     "Lean on me, I got you forever 🧡",
     "Enjoying the fresh breeze outside 🌬️🌷"
   ];
@@ -102,11 +102,10 @@ function Scrapbook({ giftData, onLock, isAudioPlaying, toggleAudio }) {
           {/* Music Controller Button */}
           <button
             onClick={toggleAudio}
-            className={`text-[11px] font-sans font-semibold uppercase tracking-wider transition-all duration-300 flex items-center gap-1.5 border px-3 py-1.5 rounded-full shadow-sm backdrop-blur-sm ${
-              isAudioPlaying 
-                ? 'bg-rose-50 border-rose-200 text-rose-700 hover:bg-rose-100/80' 
-                : 'bg-white/70 border-stone-200 text-stone-400 hover:text-stone-750'
-            }`}
+            className={`text-[11px] font-sans font-semibold uppercase tracking-wider transition-all duration-300 flex items-center gap-1.5 border px-3 py-1.5 rounded-full shadow-sm backdrop-blur-sm ${isAudioPlaying
+              ? 'bg-rose-50 border-rose-200 text-rose-700 hover:bg-rose-100/80'
+              : 'bg-white/70 border-stone-200 text-stone-400 hover:text-stone-750'
+              }`}
             title={isAudioPlaying ? "Mute Background Song" : "Play Background Song"}
           >
             {isAudioPlaying ? (
@@ -202,7 +201,7 @@ function Scrapbook({ giftData, onLock, isAudioPlaying, toggleAudio }) {
                   </div>
                   <div className="text-right">
                     <span className="text-[10px] uppercase tracking-widest text-stone-400 font-sans font-bold">For:</span>
-                    <h2 className="font-cursive text-2xl text-stone-700 font-semibold">Nimnadhi Manamperi</h2>
+                    <h2 className="font-cursive text-2xl text-stone-700 font-semibold">Nimnadhi </h2>
                   </div>
                 </div>
 
@@ -430,7 +429,7 @@ function Scrapbook({ giftData, onLock, isAudioPlaying, toggleAudio }) {
               const startY = 0;
               const endX = Math.cos((angle * Math.PI) / 180) * distance;
               const endY = Math.sin((angle * Math.PI) / 180) * distance;
-              
+
               const flowerEmojis = ["🌸", "💮", "🌺", "🌼", "🏵️", "🌷", "🌸", "💮", "🌺"];
               const emoji = flowerEmojis[i % flowerEmojis.length];
               const sizeClass = i % 4 === 0 ? "text-6xl" : i % 2 === 0 ? "text-5xl" : "text-3xl";
@@ -438,21 +437,21 @@ function Scrapbook({ giftData, onLock, isAudioPlaying, toggleAudio }) {
               return (
                 <motion.div
                   key={i}
-                  initial={{ 
-                    x: startX, 
-                    y: startY, 
-                    scale: 0, 
+                  initial={{
+                    x: startX,
+                    y: startY,
+                    scale: 0,
                     rotate: 0,
                     opacity: 0
                   }}
-                  animate={{ 
-                    x: endX, 
-                    y: endY, 
-                    scale: [0, 2.2, 2.2, 0], 
+                  animate={{
+                    x: endX,
+                    y: endY,
+                    scale: [0, 2.2, 2.2, 0],
                     rotate: i % 2 === 0 ? 360 : -360,
                     opacity: [0, 1, 1, 0]
                   }}
-                  transition={{ 
+                  transition={{
                     duration: 2.8,
                     ease: "easeInOut",
                     delay: (i % 10) * 0.04
@@ -469,8 +468,8 @@ function Scrapbook({ giftData, onLock, isAudioPlaying, toggleAudio }) {
               {/* Center */}
               <motion.div
                 initial={{ scale: 0, rotate: 0, opacity: 0 }}
-                animate={{ 
-                  scale: [0, 6, 9, 0], 
+                animate={{
+                  scale: [0, 6, 9, 0],
                   rotate: [0, 90, 180, 270],
                   opacity: [0, 1, 1, 0]
                 }}
@@ -479,12 +478,12 @@ function Scrapbook({ giftData, onLock, isAudioPlaying, toggleAudio }) {
               >
                 🌸
               </motion.div>
-              
+
               {/* Top Left */}
               <motion.div
                 initial={{ scale: 0, rotate: 0, opacity: 0, x: -100, y: -100 }}
-                animate={{ 
-                  scale: [0, 5, 8, 0], 
+                animate={{
+                  scale: [0, 5, 8, 0],
                   rotate: [0, -90, -180, -270],
                   opacity: [0, 0.9, 0.9, 0]
                 }}
@@ -497,8 +496,8 @@ function Scrapbook({ giftData, onLock, isAudioPlaying, toggleAudio }) {
               {/* Top Right */}
               <motion.div
                 initial={{ scale: 0, rotate: 0, opacity: 0, x: 100, y: -100 }}
-                animate={{ 
-                  scale: [0, 5, 8, 0], 
+                animate={{
+                  scale: [0, 5, 8, 0],
                   rotate: [0, 90, 180, 270],
                   opacity: [0, 0.9, 0.9, 0]
                 }}
@@ -511,8 +510,8 @@ function Scrapbook({ giftData, onLock, isAudioPlaying, toggleAudio }) {
               {/* Bottom Left */}
               <motion.div
                 initial={{ scale: 0, rotate: 0, opacity: 0, x: -100, y: 100 }}
-                animate={{ 
-                  scale: [0, 5, 8, 0], 
+                animate={{
+                  scale: [0, 5, 8, 0],
                   rotate: [0, 90, 180, 270],
                   opacity: [0, 0.9, 0.9, 0]
                 }}
@@ -525,8 +524,8 @@ function Scrapbook({ giftData, onLock, isAudioPlaying, toggleAudio }) {
               {/* Bottom Right */}
               <motion.div
                 initial={{ scale: 0, rotate: 0, opacity: 0, x: 100, y: 100 }}
-                animate={{ 
-                  scale: [0, 5, 8, 0], 
+                animate={{
+                  scale: [0, 5, 8, 0],
                   rotate: [0, -90, -180, -270],
                   opacity: [0, 0.9, 0.9, 0]
                 }}

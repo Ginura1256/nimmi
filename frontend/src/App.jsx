@@ -3,6 +3,8 @@ import axios from 'axios';
 import LockScreen from './components/LockScreen';
 import Scrapbook from './components/Scrapbook';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://nimmi.onrender.com';
+
 function App() {
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [giftData, setGiftData] = useState(null);
@@ -27,7 +29,7 @@ function App() {
   const handleUnlock = async (passcode) => {
     try {
       setErrorMsg(''); // Clear previous errors
-      const response = await axios.post('http://localhost:5000/api/gift/unlock', { passcode });
+      const response = await axios.post(`${API_BASE_URL}/api/gift/unlock`, { passcode });
       
       if (response.status === 200) {
         setGiftData(response.data);

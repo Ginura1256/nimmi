@@ -10,7 +10,7 @@ function App() {
   const [giftData, setGiftData] = useState(null);
   const [errorMsg, setErrorMsg] = useState('');
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
-  
+
   const audioRef = useRef(null);
 
   // Initialize the audio instance with loop enabled
@@ -30,7 +30,7 @@ function App() {
     try {
       setErrorMsg(''); // Clear previous errors
       const response = await axios.post(`${API_BASE_URL}/api/gift/unlock`, { passcode });
-      
+
       if (response.status === 200) {
         setGiftData(response.data);
         setIsUnlocked(true);
@@ -53,7 +53,7 @@ function App() {
       } else {
         setErrorMsg('Server connection failed');
       }
-      
+
       // Auto-clear the error message after a short period to allow re-shaking on next attempt
       setTimeout(() => {
         setErrorMsg('');
@@ -95,9 +95,9 @@ function App() {
   return (
     <div>
       {isUnlocked && giftData ? (
-        <Scrapbook 
-          giftData={giftData} 
-          onLock={handleLock} 
+        <Scrapbook
+          giftData={giftData}
+          onLock={handleLock}
           isAudioPlaying={isAudioPlaying}
           toggleAudio={toggleAudio}
         />

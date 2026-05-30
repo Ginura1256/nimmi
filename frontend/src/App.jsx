@@ -15,7 +15,7 @@ function App() {
 
   // Initialize the audio instance with loop enabled
   useEffect(() => {
-    audioRef.current = new Audio('/assets/Soch Na Sake [SlowedReverb] Song Lyrics  Arijit Singh, Tulsi Kumar.mp3');
+    audioRef.current = new Audio('/assets/Dilu Beats - Hiru Hangunawe (හිරු හැංගුනාවේ)  Slowed and Reverb  Navizz.mp3');
     audioRef.current.loop = true;
 
     return () => {

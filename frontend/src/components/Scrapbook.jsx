@@ -574,7 +574,7 @@ function Scrapbook({ giftData, onLock, isAudioPlaying, toggleAudio, onAddMemory,
                                         {/* Inner shine */}
                                         <div className="absolute inset-0 rounded-full border border-pink-100/30 pointer-events-none" />
                                       </div>
-                                      
+
                                       {/* Decorative sparkles / doodles behind the sticker */}
                                       <span className="absolute top-[10%] left-[15%] text-lg opacity-40 rotate-[10deg]">✨</span>
                                       <span className="absolute bottom-[15%] right-[15%] text-lg opacity-40 rotate-[-15deg]">✨</span>

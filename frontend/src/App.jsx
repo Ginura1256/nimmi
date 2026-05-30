@@ -10,6 +10,7 @@ function App() {
   const [giftData, setGiftData] = useState(null);
   const [errorMsg, setErrorMsg] = useState('');
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+  const [audioVolume, setAudioVolume] = useState(0.5); // Default to 50% volume
 
   const audioRef = useRef(null);
 
@@ -17,6 +18,7 @@ function App() {
   useEffect(() => {
     audioRef.current = new Audio('/assets/bg_song.mp3');
     audioRef.current.loop = true;
+    audioRef.current.volume = audioVolume;
 
     return () => {
       if (audioRef.current) {
@@ -24,6 +26,13 @@ function App() {
       }
     };
   }, []);
+
+  // Sync volume changes dynamically
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = audioVolume;
+    }
+  }, [audioVolume]);
 
   // Unlock callback invoked when 4 digits are typed
   const handleUnlock = async (passcode) => {
@@ -156,6 +165,8 @@ function App() {
           onLock={handleLock}
           isAudioPlaying={isAudioPlaying}
           toggleAudio={toggleAudio}
+          audioVolume={audioVolume}
+          setAudioVolume={setAudioVolume}
           onAddMemory={handleAddMemory}
           onAddWishlistItem={handleAddWishlistItem}
           onToggleWishlistItem={handleToggleWishlistItem}

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-function Scrapbook({ giftData, onLock, isAudioPlaying, toggleAudio, onAddMemory, onAddWishlistItem, onToggleWishlistItem, onDeleteWishlistItem }) {
+function Scrapbook({ giftData, onLock, isAudioPlaying, toggleAudio, audioVolume, setAudioVolume, onAddMemory, onAddWishlistItem, onToggleWishlistItem, onDeleteWishlistItem }) {
   const { recipientName, letterText, mediaUrls, wishlist = [] } = giftData;
   const [isOpen, setIsOpen] = useState(false);
   const [zoomedImage, setZoomedImage] = useState(null);
@@ -200,33 +200,55 @@ function Scrapbook({ giftData, onLock, isAudioPlaying, toggleAudio, onAddMemory,
       >
         <span className="font-cursive text-3xl text-pink-700 font-bold tracking-wide">A Bouquet for You</span>
         <div className="flex items-center gap-3">
-          {/* Music Controller Button */}
-          <button
-            onClick={toggleAudio}
-            className={`text-[11px] font-sans font-semibold uppercase tracking-wider transition-all duration-300 flex items-center gap-1.5 border px-3 py-1.5 rounded-full shadow-sm backdrop-blur-sm ${isAudioPlaying
-              ? 'bg-rose-50 border-rose-200 text-rose-700 hover:bg-rose-100/80'
-              : 'bg-white/70 border-stone-200 text-stone-400 hover:text-stone-750'
-              }`}
-            title={isAudioPlaying ? "Mute Background Song" : "Play Background Song"}
-          >
-            {isAudioPlaying ? (
-              <>
-                <span className="flex items-center gap-[2px] h-3">
-                  <span className="w-[2px] h-2.5 bg-rose-600 rounded-full animate-bounce [animation-duration:0.6s]"></span>
-                  <span className="w-[2px] h-3.5 bg-rose-600 rounded-full animate-bounce [animation-duration:0.8s] delay-75"></span>
-                  <span className="w-[2px] h-2 bg-rose-600 rounded-full animate-bounce [animation-duration:0.5s] delay-150"></span>
-                </span>
-                Playing
-              </>
-            ) : (
-              <>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.8" stroke="currentColor" className="w-3.5 h-3.5 text-stone-400">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 9.75L19.5 12m0 0l2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25m-10.5-6L4.5 9H1.5v6h3l4.5 3.75V5.25z" />
-                </svg>
-                Muted
-              </>
-            )}
-          </button>
+          {/* Music Controller Button & Volume Slider */}
+          <div className="flex items-center gap-2 bg-white/70 border border-stone-200 pl-3 pr-4 py-1.5 rounded-full shadow-sm backdrop-blur-sm">
+            <button
+              onClick={toggleAudio}
+              className={`text-[11px] font-sans font-semibold uppercase tracking-wider transition-all duration-300 flex items-center gap-1.5 ${isAudioPlaying
+                ? 'text-rose-700 hover:text-rose-800'
+                : 'text-stone-400 hover:text-stone-750'
+                }`}
+              title={isAudioPlaying ? "Mute Background Song" : "Play Background Song"}
+            >
+              {isAudioPlaying ? (
+                <>
+                  <span className="flex items-center gap-[2px] h-3">
+                    <span className="w-[2px] h-2.5 bg-rose-600 rounded-full animate-bounce [animation-duration:0.6s]"></span>
+                    <span className="w-[2px] h-3.5 bg-rose-600 rounded-full animate-bounce [animation-duration:0.8s] delay-75"></span>
+                    <span className="w-[2px] h-2 bg-rose-600 rounded-full animate-bounce [animation-duration:0.5s] delay-150"></span>
+                  </span>
+                  Playing
+                </>
+              ) : (
+                <>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.8" stroke="currentColor" className="w-3.5 h-3.5 text-stone-400">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 9.75L19.5 12m0 0l2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25m-10.5-6L4.5 9H1.5v6h3l4.5 3.75V5.25z" />
+                  </svg>
+                  Muted
+                </>
+              )}
+            </button>
+            
+            {/* Divider line */}
+            <div className="h-4 w-[1px] bg-stone-200/80 mx-1" />
+            
+            {/* Volume Icon */}
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.8" stroke="currentColor" className="w-3.5 h-3.5 text-stone-400">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z" />
+            </svg>
+            
+            {/* Volume range slider input */}
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.01"
+              value={audioVolume}
+              onChange={(e) => setAudioVolume(parseFloat(e.target.value))}
+              className="w-16 md:w-20 accent-pink-600 h-1 bg-stone-200 rounded-lg cursor-pointer appearance-none"
+              title="Volume Control"
+            />
+          </div>
 
           {/* Lock Screen Button */}
           <button

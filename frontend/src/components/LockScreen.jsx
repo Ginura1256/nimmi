@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 function LockScreen({ onUnlock, errorMsg }) {
   const [passcode, setPasscode] = useState('');
@@ -9,7 +9,16 @@ function LockScreen({ onUnlock, errorMsg }) {
   const handleKeyClick = (key) => {
     if (isOpening) return;
     if (passcode.length < 4) {
-      setPasscode((prev) => prev + key);
+      const nextPasscode = passcode + key;
+      setPasscode(nextPasscode);
+      if (nextPasscode.length === 4) {
+        setIsOpening(true);
+        setTimeout(() => {
+          onUnlock(nextPasscode);
+          setIsOpening(false);
+          setPasscode('');
+        }, 600);
+      }
     }
   };
 
@@ -19,22 +28,10 @@ function LockScreen({ onUnlock, errorMsg }) {
     setPasscode((prev) => prev.slice(0, -1));
   };
 
-  // Trigger callback when passcode reaches 4
-  useEffect(() => {
-    if (passcode.length === 4) {
-      setIsOpening(true);
-      const timer = setTimeout(() => {
-        onUnlock(passcode);
-        setIsOpening(false);
-        setPasscode('');
-      }, 600);
-      return () => clearTimeout(timer);
-    }
-  }, [passcode, onUnlock]);
-
   // Handle shake animation trigger on error message change
   useEffect(() => {
     if (errorMsg) {
+      /* eslint-disable react-hooks/set-state-in-effect */
       setShouldShake(true);
       const timer = setTimeout(() => {
         setShouldShake(false);

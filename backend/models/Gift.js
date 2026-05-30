@@ -19,6 +19,21 @@ const GiftSchema = new mongoose.Schema({
   mediaUrls: {
     type: [String],
     default: []
+  },
+  memories: {
+    type: [{
+      url: { type: String, required: true },
+      caption: { type: String, required: true }
+    }],
+    default: []
+  },
+  wishlist: {
+    type: [{
+      title: { type: String, required: true },
+      imageUrl: { type: String, required: true },
+      isCompleted: { type: Boolean, default: false }
+    }],
+    default: []
   }
 }, {
   timestamps: true

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import LockScreen from './components/LockScreen';
 import Scrapbook from './components/Scrapbook';
@@ -74,6 +74,62 @@ function App() {
     }
   };
 
+  const handleAddMemory = async (url, caption) => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/api/gift/${giftData._id}/memories`, { url, caption });
+      if (response.status === 200) {
+        setGiftData(response.data);
+        return true;
+      }
+    } catch (err) {
+      console.error("Error adding memory:", err);
+      alert("Failed to add memory: " + (err.response?.data?.error || err.message));
+      return false;
+    }
+  };
+
+  const handleAddWishlistItem = async (title, imageUrl) => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/api/gift/${giftData._id}/wishlist`, { title, imageUrl });
+      if (response.status === 200) {
+        setGiftData(response.data);
+        return true;
+      }
+    } catch (err) {
+      console.error("Error adding wishlist item:", err);
+      alert("Failed to add item: " + (err.response?.data?.error || err.message));
+      return false;
+    }
+  };
+
+  const handleToggleWishlistItem = async (itemId, isCompleted) => {
+    try {
+      const response = await axios.patch(`${API_BASE_URL}/api/gift/${giftData._id}/wishlist/${itemId}`, { isCompleted });
+      if (response.status === 200) {
+        setGiftData(response.data);
+        return true;
+      }
+    } catch (err) {
+      console.error("Error toggling wishlist item:", err);
+      alert("Failed to update status: " + (err.response?.data?.error || err.message));
+      return false;
+    }
+  };
+
+  const handleDeleteWishlistItem = async (itemId) => {
+    try {
+      const response = await axios.delete(`${API_BASE_URL}/api/gift/${giftData._id}/wishlist/${itemId}`);
+      if (response.status === 200) {
+        setGiftData(response.data);
+        return true;
+      }
+    } catch (err) {
+      console.error("Error deleting wishlist item:", err);
+      alert("Failed to delete item: " + (err.response?.data?.error || err.message));
+      return false;
+    }
+  };
+
   // Toggle background song playback
   const toggleAudio = () => {
     if (audioRef.current) {
@@ -100,6 +156,10 @@ function App() {
           onLock={handleLock}
           isAudioPlaying={isAudioPlaying}
           toggleAudio={toggleAudio}
+          onAddMemory={handleAddMemory}
+          onAddWishlistItem={handleAddWishlistItem}
+          onToggleWishlistItem={handleToggleWishlistItem}
+          onDeleteWishlistItem={handleDeleteWishlistItem}
         />
       ) : (
         <LockScreen onUnlock={handleUnlock} errorMsg={errorMsg} />

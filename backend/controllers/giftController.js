@@ -110,8 +110,8 @@ const addWishlistItem = async (req, res) => {
     const { id } = req.params;
     const { title, imageUrl } = req.body;
 
-    if (!title || !imageUrl) {
-      return res.status(400).json({ error: 'Title and image URL are required' });
+    if (!title) {
+      return res.status(400).json({ error: 'Title is required' });
     }
 
     // In-memory fallback

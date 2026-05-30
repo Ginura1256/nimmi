@@ -96,13 +96,9 @@ function Scrapbook({ giftData, onLock, isAudioPlaying, toggleAudio, onAddMemory,
       alert("Please enter a title/name for the item!");
       return;
     }
-    if (!newWishlistUrl) {
-      alert("Please upload a photo or enter a photo URL!");
-      return;
-    }
 
     setIsWishlistSubmitting(true);
-    const success = await onAddWishlistItem(newWishlistTitle, newWishlistUrl);
+    const success = await onAddWishlistItem(newWishlistTitle, newWishlistUrl || '');
     setIsWishlistSubmitting(false);
 
     if (success) {
@@ -306,7 +302,7 @@ function Scrapbook({ giftData, onLock, isAudioPlaying, toggleAudio, onAddMemory,
                   </div>
                   <div className="text-right">
                     <span className="text-[10px] uppercase tracking-widest text-stone-400 font-sans font-bold">For:</span>
-                    <h2 className="font-cursive text-2xl text-stone-700 font-semibold">{recipientName}</h2>
+                    <h2 className="font-cursive text-2xl text-stone-700 font-semibold">Nimnadi</h2>
                   </div>
                 </div>
 
@@ -338,8 +334,8 @@ function Scrapbook({ giftData, onLock, isAudioPlaying, toggleAudio, onAddMemory,
                 <button
                   onClick={() => setActiveTab('memories')}
                   className={`px-6 py-2.5 rounded-full font-semibold font-sans tracking-wide uppercase transition-all duration-300 text-xs md:text-sm border shadow-sm ${activeTab === 'memories'
-                      ? 'bg-pink-600 border-pink-650 text-white shadow-md shadow-pink-900/20 scale-[1.03]'
-                      : 'bg-white/80 border-stone-200 text-stone-400 hover:text-stone-700 hover:bg-white'
+                    ? 'bg-pink-600 border-pink-650 text-white shadow-md shadow-pink-900/20 scale-[1.03]'
+                    : 'bg-white/80 border-stone-200 text-stone-400 hover:text-stone-700 hover:bg-white'
                     }`}
                 >
                   🌸 Our Memories
@@ -347,8 +343,8 @@ function Scrapbook({ giftData, onLock, isAudioPlaying, toggleAudio, onAddMemory,
                 <button
                   onClick={() => setActiveTab('wishlist')}
                   className={`px-6 py-2.5 rounded-full font-semibold font-sans tracking-wide uppercase transition-all duration-300 text-xs md:text-sm border shadow-sm ${activeTab === 'wishlist'
-                      ? 'bg-pink-600 border-pink-650 text-white shadow-md shadow-pink-900/20 scale-[1.03]'
-                      : 'bg-white/80 border-stone-200 text-stone-400 hover:text-stone-700 hover:bg-white'
+                    ? 'bg-pink-600 border-pink-650 text-white shadow-md shadow-pink-900/20 scale-[1.03]'
+                    : 'bg-white/80 border-stone-200 text-stone-400 hover:text-stone-700 hover:bg-white'
                     }`}
                 >
                   ✨ Future Wishlist
@@ -548,17 +544,49 @@ function Scrapbook({ giftData, onLock, isAudioPlaying, toggleAudio, onAddMemory,
                             />
 
                             {/* Item Image */}
-                            <div className="w-full h-[220px] bg-stone-100 overflow-hidden relative border border-stone-100 mb-4 rounded-sm cursor-zoom-in"
-                              onClick={() => setZoomedImage({ url: item.imageUrl, caption: item.title })}>
-                              <img
-                                src={item.imageUrl}
-                                alt={item.title}
-                                className="w-full h-full object-cover filter brightness-[0.98] sepia-[0.02]"
-                                loading="lazy"
-                              />
+                            <div className={`w-full h-[220px] bg-stone-100 overflow-hidden relative border border-stone-100 mb-4 rounded-sm ${item.imageUrl ? 'cursor-zoom-in' : 'cursor-default'}`}
+                              onClick={() => item.imageUrl && setZoomedImage({ url: item.imageUrl, caption: item.title })}>
+                              {item.imageUrl ? (
+                                <img
+                                  src={item.imageUrl}
+                                  alt={item.title}
+                                  className="w-full h-full object-cover filter brightness-[0.98] sepia-[0.02]"
+                                  loading="lazy"
+                                />
+                              ) : (
+                                (() => {
+                                  const stickers = ["🎁", "💖", "🧸", "🏡", "✈️", "☕", "🍿", "💍", "🎨"];
+                                  const stickerEmoji = stickers[index % stickers.length];
+                                  const stickerLabels = [
+                                    "For Us ❤️",
+                                    "Our Dream ✨",
+                                    "Future Plan 🌸",
+                                    "Sweet Life 🍯",
+                                    "Together 🥂"
+                                  ];
+                                  const stickerLabel = stickerLabels[index % stickerLabels.length];
+                                  return (
+                                    <div className="w-full h-full bg-gradient-to-tr from-pink-50 to-amber-50/60 flex flex-col items-center justify-center p-6 relative overflow-hidden select-none">
+                                      {/* Sticker Badge design */}
+                                      <div className="w-28 h-28 rounded-full bg-white border-4 border-dashed border-pink-300 shadow-md flex flex-col items-center justify-center rotate-[3deg] transition-transform duration-300 hover:rotate-[-3deg] relative z-10">
+                                        <span className="text-4xl filter drop-shadow-sm mb-1">{stickerEmoji}</span>
+                                        <span className="font-cursive text-xs text-pink-600 font-semibold tracking-wide">{stickerLabel}</span>
+                                        {/* Inner shine */}
+                                        <div className="absolute inset-0 rounded-full border border-pink-100/30 pointer-events-none" />
+                                      </div>
+                                      
+                                      {/* Decorative sparkles / doodles behind the sticker */}
+                                      <span className="absolute top-[10%] left-[15%] text-lg opacity-40 rotate-[10deg]">✨</span>
+                                      <span className="absolute bottom-[15%] right-[15%] text-lg opacity-40 rotate-[-15deg]">✨</span>
+                                      <span className="absolute top-[20%] right-[18%] text-base opacity-30">🌸</span>
+                                      <span className="absolute bottom-[20%] left-[18%] text-base opacity-30">💖</span>
+                                    </div>
+                                  );
+                                })()
+                              )}
                               {/* Completed Stamp Overlay */}
                               {item.isCompleted && (
-                                <div className="absolute inset-0 bg-stone-900/20 flex items-center justify-center z-10">
+                                <div className="absolute inset-0 bg-stone-900/20 flex items-center justify-center z-20">
                                   <motion.div
                                     initial={{ scale: 0.5, rotate: -30, opacity: 0 }}
                                     animate={{ scale: 1, rotate: -15, opacity: 1 }}

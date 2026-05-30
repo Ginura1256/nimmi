@@ -30,7 +30,7 @@ const GiftSchema = new mongoose.Schema({
   wishlist: {
     type: [{
       title: { type: String, required: true },
-      imageUrl: { type: String, required: true },
+      imageUrl: { type: String, default: '' },
       isCompleted: { type: Boolean, default: false }
     }],
     default: []

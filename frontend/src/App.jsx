@@ -15,7 +15,7 @@ function App() {
 
   // Initialize the audio instance with loop enabled
   useEffect(() => {
-    audioRef.current = new Audio('/assets/Dilu Beats - Hiru Hangunawe (හිරු හැංගුනාවේ)  Slowed and Reverb  Navizz.mp3');
+    audioRef.current = new Audio('/assets/bg_song.mp3');
     audioRef.current.loop = true;
 
     return () => {
